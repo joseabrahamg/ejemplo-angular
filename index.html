@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html ng-app="gemStore">
+  <head>
+    <link rel="icon" href="https://angularjs.org/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://angularjs.org/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.6.9/angular-locale_es-es.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
+    <title>Ejemplo sencillo de AngularJS</title>
+  </head>
+  <body class="list-group" ng-controller="StoreController as store">
+    <header>      
+      <div class="container">
+        <div class="row" style="position: relative;">
+          <a href="https://www.codeschool.com/courses/shaping-up-with-angularjs/goto" target="_blank" style="position: absolute; right: 15px; top: 20px;">
+            <img width="100px" src="https://www.codeschool.com/assets/pages/angular/badge-shaping-up-with-angular-7bc846a1bc20874d1f7fc28e7766170040cb24376c733370b94362c2910b9bfc.png">
+          </a>
+        </div>
+        <h1 class="text-center"><img src="https://angularjs.org/img/ng-logo.png"></h1>
+        <h1 class="text-center">Gemas hechas a mano</h1>
+        <h2 class="text-center">- una tienda Angular -</h2>
+      </div>
+    </header>
+    <div class="container">
+      <div class="list-group-item" ng-repeat="product in store.products" style="margin-bottom: 20px;">
+        <h3>
+          {{product.name}}
+          <em class="pull-right">{{product.price | currency}}</em>
+        </h3>
+        <!-- Image Gallery  -->
+        <div class='gallery' ng-show="product.images.length">
+          <img ng-src="{{product.images[0]}}" />
+          <ul class="list-inline thumbs">
+            <li class="thumbnail" ng-repeat="image in product.images">
+              <img ng-src="{{image}}" />
+            </li>
+          </ul>
+        </div>
+
+        <section class="tab" ng-controller="TabController as tab">
+          <ul class="nav nav-pills">
+            <li ng-class="{ active: tab.isSet(1) }">
+              <a href ng-click="tab.setTab(1)">Descripción</a></li>
+            <li ng-class="{ active: tab.isSet(2) }">
+              <a href ng-click="tab.setTab(2)">Especificaciones</a></li>
+            <li ng-class="{ active: tab.isSet(3) }">
+              <a href ng-click="tab.setTab(3)">Comentarios</a></li>
+          </ul>
+          <div ng-show="tab.isSet(1)">
+            <h4>Descripción</h4>
+            <blockquote>{{product.description}}</blockquote>
+          </div>
+          <div ng-show="tab.isSet(2)">
+            <h4>Especificaciones</h4>
+            <blockquote>Brillo: {{product.brillo}}</blockquote>
+          </div>
+          <div ng-show="tab.isSet(3)">
+            <h4>Comentarios</h4>
+              <ul class="nav nav-pills">
+                <li ng-repeat="review in product.reviews" style="border: 1px dashed rgb(221, 221, 221);padding: 10px;">
+                  <span style="right: 15px; position: absolute;">{{review.createdOn | date:"dd MMMM yyyy H:mm"}}</span><br>
+                  <span ng-repeat="n in [].constructor(review.stars) track by $index">
+                    <i class="far fa-star"></i>                    
+                  </span><br>
+                  <p>{{review.body}}</p>
+                  <a href="mailto:{{review.author}}" style="text-align: right;">
+                    <em>por {{review.author}}</em>
+                  </a>
+                </li>
+              </ul>
+          </div>
+        </section>
+      </div>
+      <div style="text-align: center; position: relative;">
+        <h4><em>Realizado con la ayuda de: </em></h4>
+        <p>
+          <a href="https://www.codeschool.com/" target="_blank">
+            <img width="200px" src="https://www.codeschool.com/assets/logos/logo-code-school-ps-af6d2dac2b8f78566e48a0e451a9233894464e64927376b87d88402aebb76803.svg">
+          </a>
+        </p>
+        <p>
+          <a href="https://angularjs.org/" target="_blank">
+            <img width="200px" src="https://angularjs.org/img/AngularJS-large.png">
+          </a>
+        </p>
+        <a href="https://www.linkedin.com/in/joseabrahamg/" target="_blank">
+          <div style="background-image: url(https://media.licdn.com/dms/image/C5603AQEk6su70c4kKw/profile-displayphoto-shrink_200_200/0?e=1527948000&amp;v=alpha&amp;t=_XAc0E1Cp4TlPKlS15Ff2Nhk4JJR8l9n-tMnIl6_pXU); background-repeat: no-repeat; width: 64px; height: 64px; background-size: 64px;margin: auto; border-radius: 5px; position: absolute; right: 0px; bottom: 0px;">
+            <i class="fab fa-3x fa-linkedin" style="color: rgb(0, 115, 177, 0.75); font-size: 74px; margin: -5px;"></i>
+          </div>
+        </a>
+      </div>
+    </div>
+  </body>
+</html>
